@@ -38,4 +38,26 @@ namespace PicoLed {
         return true;
     }
 
+    void Stars::updatePalette(vector<Color> newPalette)
+    {
+        palette = newPalette;        
+    }
+
+    void Stars::updateColor(Color newColor)
+    {
+        palette.pop_back();
+        palette.push_back(newColor);
+    }
+
+    void Stars::addColor(Color newColor)
+    {
+        palette.push_back(newColor);
+    }
+
+    void Stars::removeColor()
+    {
+        palette.pop_back();
+    }
+
+
 }

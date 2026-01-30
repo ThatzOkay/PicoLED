@@ -16,6 +16,13 @@ class Stars: public Fade {
         Stars(PicoLedController &controller, vector<Color> palette, double spawnRate);
         Stars(PicoLedController &controller, vector<Color> palette, double spawnRate, double fadeRate);
 
+
+        void updatePalette(vector<Color> newPalette);
+        void updateColor(Color newColor);
+        void addColor(Color newColor);
+        void removeColor();
+
+
     protected:
         vector<Color> palette;
         double spawnRate;

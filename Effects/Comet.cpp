@@ -52,4 +52,9 @@ namespace PicoLed {
         return true;
     }
 
+    void Comet::updateColor(Color newColor)
+    {
+        color = newColor;
+    }
+
 }

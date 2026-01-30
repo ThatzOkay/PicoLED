@@ -36,4 +36,10 @@ namespace PicoLed {
         return true;
     }
 
+    void Marquee::updatePalette(vector<Color> newPalette)
+    {
+        palette = newPalette;        
+    }
+
+
 }

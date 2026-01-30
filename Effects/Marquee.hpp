@@ -14,6 +14,8 @@ class Marquee: public PicoLedEffect {
         Marquee(PicoLedController &controller, vector<Color> palette, double length, double speed);
         Marquee(PicoLedController &controller, vector<Color> palette, double length, double speed, double spacing);
 
+        void updatePalette(vector<Color> newPalette);
+
     protected:
         vector<Color> palette;
         double length;

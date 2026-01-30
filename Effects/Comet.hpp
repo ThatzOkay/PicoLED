@@ -14,6 +14,8 @@ class Comet: public Fade {
         Comet(PicoLedController &controller, Color color, double speed, double length);
         Comet(PicoLedController &controller, Color color, double speed, double length, double fadeRate);
 
+        void updateColor(Color newColor);
+
     protected:
         Color color;
         double offset;
