@@ -26,7 +26,6 @@ uint8_t PicoLedTarget::getBrightness() {
 }
 
 void PicoLedTarget::setBrightness(uint8_t brightness) {
-    printf("Brightness: %u at %X\n", brightness, this);
     this->brightness = brightness;
 }
 
