@@ -43,6 +43,10 @@ void PicoLedController::setPixelColor(uint index, Color color) {
     setPixelColor(index, color, mode);
 }
 
+Color PicoLedController::getPixelColor(uint index) {
+    return target->getPixelColor(index);
+}
+
 void PicoLedController::setPixelColor(uint index, Color color, DrawMode mode) {
     switch (mode) {
         default:
