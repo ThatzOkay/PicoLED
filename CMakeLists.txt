@@ -18,6 +18,7 @@ target_sources(PicoLed INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/Effects/Stars.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Effects/Comet.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Effects/Bounce.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Effects/Particles.cpp
 )
 
 pico_generate_pio_header(PicoLed ${CMAKE_CURRENT_LIST_DIR}/WS2812B.pio)
