@@ -39,6 +39,7 @@ class Particles: public Fade {
         vector<ParticleSource> sources;
         vector<Particle> particles;
         uint8_t* heat;
+        vector<uint> heatNew;
         double spreadFactor;
 
         uint8_t getHeatSpread(uint index);

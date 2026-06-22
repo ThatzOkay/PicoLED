@@ -1,30 +1,31 @@
 #include "Particles.hpp"
 #include "PicoLed.hpp"
+#include <algorithm>
 
 using std::min, std::max;
 
 namespace PicoLed {
 
 Particles::Particles(PicoLedController &controller, vector<Color> palette):
-Fade(controller, RGB(0, 0, 0), 1.0), palette(palette), sources(), spreadFactor(1.0)
+Fade(controller, RGB(0, 0, 0), 1.0), palette(palette), sources(), heatNew(controller.getNumLeds(), 0), spreadFactor(1.0)
 {
     heat = new uint8_t[controller.getNumLeds()]{ 0 };
 }
 
 Particles::Particles(PicoLedController &controller, vector<Color> palette, double spreadFactor):
-Fade(controller, RGB(0, 0, 0), 1.0), palette(palette), sources(), spreadFactor(spreadFactor)
+Fade(controller, RGB(0, 0, 0), 1.0), palette(palette), sources(), heatNew(controller.getNumLeds(), 0), spreadFactor(spreadFactor)
 {
     heat = new uint8_t[controller.getNumLeds()]{ 0 };
 }
 
 Particles::Particles(PicoLedController &controller, vector<Color> palette, double spreadFactor, double coolingRate):
-Fade(controller, RGB(0, 0, 0), coolingRate), palette(palette), sources(), spreadFactor(spreadFactor)
+Fade(controller, RGB(0, 0, 0), coolingRate), palette(palette), sources(), heatNew(controller.getNumLeds(), 0), spreadFactor(spreadFactor)
 {
     heat = new uint8_t[controller.getNumLeds()]{ 0 };
 }
 
 Particles::~Particles() {
-    delete heat;
+    delete[] heat;
 }
 
 void Particles::addSource(uint pixelIndex, double spawnRate) {
@@ -76,7 +77,7 @@ bool Particles::fadePixels(uint32_t timeNow) {
             }
         }
         // Spread the heat
-        uint heatNew[numLeds] { 0 };
+        std::fill(heatNew.begin(), heatNew.end(), 0u);
         double heatAvg;
         double spreadAmount = spreadFactor * numLeds / 15.0;
         // Spread forward
@@ -98,7 +99,7 @@ bool Particles::fadePixels(uint32_t timeNow) {
             heat[i] = (heatNew[i] * fadeValue / 2 + heat[i] * 2) / (fadeValue + 2);
         }
         // Update particles
-        for (std::vector<Particle>::iterator it = particles.begin() ; it != particles.end(); ++it) {
+        for (std::vector<Particle>::iterator it = particles.begin() ; it != particles.end(); ) {
             // Apply heat
             uint pixelLeft = floor(it->offset);
             uint pixelRight = ceil(it->offset);
@@ -117,7 +118,9 @@ bool Particles::fadePixels(uint32_t timeNow) {
             it->heat -= min<uint8_t>(it->heat, fadeValue);
             if ((it->heat == 0) || (it->offset < 0.0) || (it->offset > numLeds)) {
                 // Particle lost all heat or went out of bounds
-                particles.erase(it--);
+                it = particles.erase(it);
+            } else {
+                ++it;
             }
         }
         fadeLastTick = timeNow - (timeGone % fadeInterval);
