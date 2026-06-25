@@ -2,13 +2,13 @@
 #define PICOLEDEFFECT_BOUNCE_H
 
 #include <vector>
-#include "Effects/Fade.hpp"
+#include "Effects/EffectBase.hpp"
 
 using std::vector;
 
 namespace PicoLed {
 
-class Bounce: public Fade {
+class Bounce: public EffectBase {
 
     public:
         Bounce(PicoLedController &controller, double fadeRate, double gravity);

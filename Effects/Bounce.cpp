@@ -4,7 +4,7 @@
 namespace PicoLed {
 
     Bounce::Bounce(PicoLedController &controller, double fadeRate, double gravity):
-    Fade(controller, RGB(0, 0, 0), fadeRate), gravity(gravity)
+    EffectBase(controller, RGB(0, 0, 0), fadeRate), gravity(gravity)
     {
     }
 
@@ -25,7 +25,7 @@ namespace PicoLed {
             it->speed = (double)numLeds * 0.5 - (double)(random() % 100) / 10.0;
         }
         // Reset update
-        Fade::reset();
+        EffectBase::reset();
     }
 
     bool Bounce::update(uint32_t timeGone, uint32_t timeNow) {

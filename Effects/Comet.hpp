@@ -2,13 +2,13 @@
 #define PICOLEDEFFECT_COMET_H
 
 #include <vector>
-#include "Effects/Fade.hpp"
+#include "Effects/EffectBase.hpp"
 
 using std::vector;
 
 namespace PicoLed {
 
-class Comet: public Fade {
+class Comet: public EffectBase {
 
     public:
         Comet(PicoLedController &controller, Color color, double speed, double length);

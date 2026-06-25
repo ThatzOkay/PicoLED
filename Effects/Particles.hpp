@@ -3,13 +3,13 @@
 
 #include <vector>
 #include "PicoLed.hpp"
-#include "Effects/Fade.hpp"
+#include "Effects/EffectBase.hpp"
 
 using std::vector;
 
 namespace PicoLed {
 
-class Particles: public Fade {
+class Particles: public EffectBase {
 
     public:
         struct ParticleSource {
@@ -29,6 +29,10 @@ class Particles: public Fade {
         Particles(PicoLedController &controller, vector<Color> palette, double spreadFactor);
         Particles(PicoLedController &controller, vector<Color> palette, double spreadFactor, double coolingRate);
         ~Particles();
+        // Owns `heat` via raw new[]/delete[]; the default copy ctor/assignment
+        // would shallow-copy that pointer and cause a double-free/use-after-free.
+        Particles(const Particles&) = delete;
+        Particles& operator=(const Particles&) = delete;
 
         void addSource(uint pixelIndex, double spawnRate);
         void addSource(uint pixelIndex, double spawnRate, double spawnSpeed);

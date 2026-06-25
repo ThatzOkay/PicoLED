@@ -7,19 +7,19 @@ using std::min, std::max;
 namespace PicoLed {
 
 Particles::Particles(PicoLedController &controller, vector<Color> palette):
-Fade(controller, RGB(0, 0, 0), 1.0), palette(palette), sources(), heatNew(controller.getNumLeds(), 0), spreadFactor(1.0)
+EffectBase(controller, RGB(0, 0, 0), 1.0), palette(palette), sources(), heatNew(controller.getNumLeds(), 0), spreadFactor(1.0)
 {
     heat = new uint8_t[controller.getNumLeds()]{ 0 };
 }
 
 Particles::Particles(PicoLedController &controller, vector<Color> palette, double spreadFactor):
-Fade(controller, RGB(0, 0, 0), 1.0), palette(palette), sources(), heatNew(controller.getNumLeds(), 0), spreadFactor(spreadFactor)
+EffectBase(controller, RGB(0, 0, 0), 1.0), palette(palette), sources(), heatNew(controller.getNumLeds(), 0), spreadFactor(spreadFactor)
 {
     heat = new uint8_t[controller.getNumLeds()]{ 0 };
 }
 
 Particles::Particles(PicoLedController &controller, vector<Color> palette, double spreadFactor, double coolingRate):
-Fade(controller, RGB(0, 0, 0), coolingRate), palette(palette), sources(), heatNew(controller.getNumLeds(), 0), spreadFactor(spreadFactor)
+EffectBase(controller, RGB(0, 0, 0), coolingRate), palette(palette), sources(), heatNew(controller.getNumLeds(), 0), spreadFactor(spreadFactor)
 {
     heat = new uint8_t[controller.getNumLeds()]{ 0 };
 }
@@ -141,7 +141,11 @@ bool Particles::update(uint32_t timeGone, uint32_t timeNow) {
         it->spawnValue += (double)(random() % 1000) / 1000.0 * (double)timeGone / 1000.0;
         while (it->spawnValue > it->spawnRate) {
             it->spawnValue -= it->spawnRate;
-            addParticle(it->pixelIndex, it->spawnSpeed * (rand() % 50 + 50) / 100.0, rand() % 127 + 128);
+            // Cap live particles so a long uptime can't grow this vector without bound
+            // (RP2040 has no FPU, so each particle's double math gets expensive in bulk).
+            if (particles.size() < controller.getNumLeds()) {
+                addParticle(it->pixelIndex, it->spawnSpeed * (rand() % 50 + 50) / 100.0, rand() % 127 + 128);
+            }
         }
     }
     // Draw current state

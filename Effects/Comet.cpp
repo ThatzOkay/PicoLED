@@ -6,12 +6,12 @@ using std::max;
 namespace PicoLed {
 
     Comet::Comet(PicoLedController &controller, Color color, double speed, double length):
-    Fade(controller, RGB(0, 0, 0), 0.5), color(color), offset(0.0), speed(speed), length(length)
+    EffectBase(controller, RGB(0, 0, 0), 0.5), color(color), offset(0.0), speed(speed), length(length)
     {
     }
 
     Comet::Comet(PicoLedController &controller, Color color, double speed, double length, double fadeRate):
-    Fade(controller, RGB(0, 0, 0), fadeRate), color(color), offset(0.0), speed(speed), length(length)
+    EffectBase(controller, RGB(0, 0, 0), fadeRate), color(color), offset(0.0), speed(speed), length(length)
     {
     }
 

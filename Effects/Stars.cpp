@@ -4,24 +4,24 @@
 namespace PicoLed {
 
     Stars::Stars(PicoLedController &controller, Color color, double spawnRate):
-    Fade(controller, RGB(0, 0, 0), 0.5), palette(), spawnRate(spawnRate), nextStar(0)
+    EffectBase(controller, RGB(0, 0, 0), 0.5), palette(), spawnRate(spawnRate), nextStar(0)
     {
         palette.push_back(color);
     }
 
-    Stars::Stars(PicoLedController &controller, Color color, double spawnRate, double fadeRate): 
-    Fade(controller, RGB(0, 0, 0), fadeRate), palette(), spawnRate(spawnRate), nextStar(0)
+    Stars::Stars(PicoLedController &controller, Color color, double spawnRate, double fadeRate):
+    EffectBase(controller, RGB(0, 0, 0), fadeRate), palette(), spawnRate(spawnRate), nextStar(0)
     {
         palette.push_back(color);
     }
 
-    Stars::Stars(PicoLedController &controller, vector<Color> palette, double spawnRate): 
-    Fade(controller, RGB(0, 0, 0), 0.5), palette(palette), spawnRate(spawnRate), nextStar(0)
+    Stars::Stars(PicoLedController &controller, vector<Color> palette, double spawnRate):
+    EffectBase(controller, RGB(0, 0, 0), 0.5), palette(palette), spawnRate(spawnRate), nextStar(0)
     {
     }
 
-    Stars::Stars(PicoLedController &controller, vector<Color> palette, double spawnRate, double fadeRate): 
-    Fade(controller, RGB(0, 0, 0), fadeRate), palette(palette), spawnRate(spawnRate), nextStar(0)
+    Stars::Stars(PicoLedController &controller, vector<Color> palette, double spawnRate, double fadeRate):
+    EffectBase(controller, RGB(0, 0, 0), fadeRate), palette(palette), spawnRate(spawnRate), nextStar(0)
     {
     }
     

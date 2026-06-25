@@ -1,14 +1,14 @@
 #ifndef PICOLEDEFFECT_STARS_H
 #define PICOLEDEFFECT_STARS_H
 
-#include "Effects/Fade.hpp"
+#include "Effects/EffectBase.hpp"
 #include <vector>
 
 using std::vector;
 
 namespace PicoLed {
 
-class Stars: public Fade {
+class Stars: public EffectBase {
 
     public:
         Stars(PicoLedController &controller, Color color, double spawnRate);
